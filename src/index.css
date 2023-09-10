@@ -1,0 +1,22 @@
+@import url(https://db.onlinewebfonts.com/c/48497e4aecdab5c56f2678cd43df541f?family=Homer+Simpson+Revised+Regular);
+@font-face {
+    font-family: "Homer Simpson Revised Regular";
+    src: url("https://db.onlinewebfonts.com/t/48497e4aecdab5c56f2678cd43df541f.eot");
+    src: url("https://db.onlinewebfonts.com/t/48497e4aecdab5c56f2678cd43df541f.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/48497e4aecdab5c56f2678cd43df541f.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/48497e4aecdab5c56f2678cd43df541f.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/48497e4aecdab5c56f2678cd43df541f.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/48497e4aecdab5c56f2678cd43df541f.svg#Homer Simpson Revised Regular")format("svg");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Homer Simpson Revised Regular";
+}
+
+#root {
+    height: 100vh;
+    background-image: url('./assets/background.jpeg');
+}

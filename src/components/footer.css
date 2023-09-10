@@ -1,0 +1,34 @@
+.footer {
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 2rem;
+    align-items: center;
+}
+
+.sounds-container {
+    display: flex;
+}
+
+.footer-button {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 1.25rem;
+    border: 2px solid black;
+    margin: 0rem 1rem;
+    transition: all 0.15s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+}
+
+
+.footer-button:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+.footer-button svg {
+    width: 1.8rem;
+}
