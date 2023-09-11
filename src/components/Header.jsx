@@ -1,4 +1,4 @@
-import './header.css'
+import './styles/header.css'
 import logo from '../assets/logo.png'
 
 export default function Header({ setIsPlaying }) {
