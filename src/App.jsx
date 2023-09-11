@@ -7,6 +7,8 @@ import { useState } from 'react'
 export default function App() {
 
   const [isPlaying, setIsPlaying] = useState(false)
+  const [difficulty, setDifficulty] = useState('')
+  const [isGameOver, setIsGameOver] = useState(false)
 
   return (
     <>
@@ -15,13 +17,18 @@ export default function App() {
         <Header
           setIsPlaying={setIsPlaying}
         />
-        <Playing />
+        <Playing 
+          difficulty={difficulty}
+          setIsGameOver={setIsGameOver}
+          isGameOver={isGameOver}
+        />
         <Footer />
       </>
     ) : (
       <>
         <Homepage 
           setIsPlaying={setIsPlaying}
+          setDifficulty={setDifficulty}
         />
         <Footer />
       </>

@@ -2,12 +2,12 @@ import './playing.css'
 import Card from '../../components/Card'
 import { useState, useEffect } from 'react'
 
-export default function Playing() {
+export default function Playing({ difficulty, setIsGameover, isGameover }) {
 
-    const [isRender, setIsRender] = useState(true)
     const [allCharactersObject, setAllCharactersObject] = useState([]);
     const [clickedCharacters, setClickedCharacters] = useState([])
     const [shownCharacters, setShownCharacters] = useState([])
+    const [score, setScore] = useState(0)
     const allCharacters = [
         {
             FirstName: 'Homer',
@@ -22,6 +22,14 @@ export default function Playing() {
             LastName: 'Simpson',
         },
     ]
+    let limit;
+    if (difficulty === 'easy') {
+        limit = 5
+    } else if (difficulty === 'medium') {
+        limit = 7
+    } else if (difficulty === 'hard') {
+        limit = 10
+    }
 
     useEffect(() => {
         getCharacters();
@@ -41,14 +49,13 @@ export default function Playing() {
             }
         }
         //Get Selected Characters
-        console.log(allCharactersObject)
         const selectedCharacters = uniqueIndices.map(index => allCharactersObject[index])
         setShownCharacters(selectedCharacters) //Set the selcted characters to be rendered
     }
 
     function getCharacters() {
-        const fetchPromises = allCharacters.map((character) => {
-            return fetch(`https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2F${character.FirstName + character.LastName}.png`)
+        allCharacters.map((character) => {
+            fetch(`https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2F${character.FirstName + character.LastName}.png`)
                 .then(response => response.blob())
                 .then(blob => {
                     setAllCharactersObject(prevState => [
@@ -60,15 +67,25 @@ export default function Playing() {
                     ])
                 })  
         })
-
-        Promise.all(fetchPromises)
-            .then(() => {
-                setIsRender(false);
-            })
     }
     
     function handleCardClick(characterName) {
+        checkGameOver(characterName)
         setClickedCharacters([...clickedCharacters, characterName])
+    }
+
+    function checkGameOver(characterName) {
+        for (let charater1 of clickedCharacters) {
+            if (characterName === charater1) {
+                setIsGameover(true)
+                return 
+            }
+        }
+        if (score === limit) {
+            setIsGameover(true)
+            return
+        }
+        setScore(score + 1)
     }
 
     return (
@@ -84,7 +101,7 @@ export default function Playing() {
                 ))}
             </div>
             <div className='score'>
-                <span className='playing-score'>0 / 5</span>
+                <span className='playing-score'>{score} / {limit}</span>
             </div>
         </main>
     )
