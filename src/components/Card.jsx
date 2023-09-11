@@ -1,8 +1,8 @@
 import './styles/card.css'
 
-export default function Card({ characterName, characterImage }) {
+export default function Card({ characterName, characterImage, handleCardClick }) {
     return (
-        <div className="card">
+        <div className="card" onClick={() => handleCardClick(characterName)}>
             <div className='image-container'>
                 <img src={URL.createObjectURL(characterImage)} />
             </div>
