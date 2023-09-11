@@ -16,6 +16,10 @@
     font-family: "Homer Simpson Revised Regular";
 }
 
+body {
+    background-color: black;
+}
+
 #root {
     height: 100vh;
     background-image: url('./assets/background.jpeg');

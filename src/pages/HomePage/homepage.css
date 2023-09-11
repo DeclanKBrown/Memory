@@ -33,3 +33,15 @@
     transform: scale(1.2);
     opacity: 0.9;
 }
+
+@media (max-width: 600px) {
+    .logo {
+        width: 80%;
+        margin-bottom: 5rem;
+    }
+
+    .game-title {
+        font-size: 4rem;
+        white-space: nowrap;
+    }
+}
