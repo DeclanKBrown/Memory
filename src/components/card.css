@@ -1,0 +1,48 @@
+.card {
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 22rem;
+    width: 15rem;
+    border: 2px solid black;
+    border-radius: 2rem;
+    margin: 2rem;
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 1fr 2rem;
+    align-items: center;
+    padding: 1rem;
+
+}
+
+.image-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1000px) {
+    .card {
+        height: 20rem;
+        width: 13rem;
+        margin: 1rem;
+        flex-wrap: wrap;
+    }
+}
+
+
+@media (max-width: 700px) {
+    .card {
+        height: 15rem;
+        width: 9rem;
+    }
+}
