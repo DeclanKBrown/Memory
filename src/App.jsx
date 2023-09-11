@@ -9,6 +9,14 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [difficulty, setDifficulty] = useState('')
   const [isGameOver, setIsGameOver] = useState(false)
+  const [result, setResult] = useState('')
+
+  function restart() {
+    setIsPlaying(false)
+    setDifficulty('')
+    setIsGameOver(false)
+    setResult('')
+  }
 
   return (
     <>
@@ -21,6 +29,9 @@ export default function App() {
           difficulty={difficulty}
           setIsGameOver={setIsGameOver}
           isGameOver={isGameOver}
+          result={result}
+          setResult={setResult}
+          restart={restart}
         />
         <Footer />
       </>

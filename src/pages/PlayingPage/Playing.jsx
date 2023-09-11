@@ -1,8 +1,9 @@
 import './playing.css'
 import Card from '../../components/Card'
+import Results from '../../components/Results'
 import { useState, useEffect } from 'react'
 
-export default function Playing({ difficulty, setIsGameOver, isGameover }) {
+export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart }) {
 
     const [allCharactersObject, setAllCharactersObject] = useState([]);
     const [clickedCharacters, setClickedCharacters] = useState([])
@@ -37,7 +38,24 @@ export default function Playing({ difficulty, setIsGameOver, isGameover }) {
             FirstName: 'Moe',
             LastName: 'Szyslak',
         },
+        {
+            FirstName: 'Waylon',
+            LastName: 'Smithers',
+        },
+        {
+            FirstName: 'Groundskeeper',
+            LastName: 'Willie',
+        },
+        {
+            FirstName: 'Ralph',
+            LastName: 'Wiggum',
+        },
+        {
+            FirstName: 'Abraham',
+            LastName: 'Simpson',
+        },
     ]
+
     let limit;
     if (difficulty === 'easy') {
         limit = 5
@@ -96,26 +114,38 @@ export default function Playing({ difficulty, setIsGameOver, isGameover }) {
     }
     
     function handleCardClick(characterName) {
-        checkGameOver(characterName)
-        setClickedCharacters([...clickedCharacters, characterName])
+        if (!isGameOver) {
+            checkGameOver(characterName)
+            if (!isGameOver) {
+                setClickedCharacters([...clickedCharacters, characterName])
+            }
+        }
     }
 
     function checkGameOver(characterName) {
         for (let character1 of clickedCharacters) {
-            if (characterName === character1.FirstName + ' ' + character1.LastName) {
+            if (characterName === character1) {
                 setIsGameOver(true)
+                setResult('You Lost')
                 return 
             }
         }
-        if (score === limit) {
+        setScore(score + 1)
+        if (score + 1 === limit) {
             setIsGameOver(true)
+            setResult('You Won')
             return
         }
-        setScore(score + 1)
     }
 
     return (
         <main className='playing-main'>
+            {isGameOver && (
+                <Results 
+                    result={result}
+                    restart={restart}
+                />
+                )}
             <div className='cards-container'>  
                 {shownCharacters.map((character) => (
                     <Card 

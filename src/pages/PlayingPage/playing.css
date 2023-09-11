@@ -17,6 +17,13 @@
     }
 }
 
+@media (max-width: 550px) {
+    .playing-main {
+        height: calc(100vh - 5rem - 300px);
+    }
+}
+
+
 .cards-container {
     height: min-content;
     display: flex;
