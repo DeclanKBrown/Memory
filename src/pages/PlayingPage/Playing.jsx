@@ -2,7 +2,7 @@ import './playing.css'
 import Card from '../../components/Card'
 import { useState, useEffect } from 'react'
 
-export default function Playing({ difficulty, setIsGameover, isGameover }) {
+export default function Playing({ difficulty, setIsGameOver, isGameover }) {
 
     const [allCharactersObject, setAllCharactersObject] = useState([]);
     const [clickedCharacters, setClickedCharacters] = useState([])
@@ -21,6 +21,22 @@ export default function Playing({ difficulty, setIsGameover, isGameover }) {
             FirstName: 'Marge',
             LastName: 'Simpson',
         },
+        {
+            FirstName: 'Mr',
+            LastName: 'Burns',
+        },
+        {
+            FirstName: 'Apu',
+            LastName: 'Nahasapeemapetilon',
+        },
+        {
+            FirstName: 'Milhouse',
+            LastName: 'VanHouten',
+        },
+        {
+            FirstName: 'Moe',
+            LastName: 'Szyslak',
+        },
     ]
     let limit;
     if (difficulty === 'easy') {
@@ -36,14 +52,23 @@ export default function Playing({ difficulty, setIsGameover, isGameover }) {
     }, []);
 
     useEffect(() => {
-        allCharactersObject.length === 3 && decideShownCharacters()
+        allCharactersObject.length === allCharacters.length && decideShownCharacters()
     }, [clickedCharacters, allCharactersObject])
 
     function decideShownCharacters() {
         //Get IDS
         const uniqueIndices = [];
+        //Add one that has already been clicked to be displayed
+        const clickedIndex = Math.floor(Math.random() * clickedCharacters.length)
+        for (let i = 0; i <  allCharactersObject.length; ++i) {
+            if (clickedCharacters[clickedIndex] === allCharactersObject[i].FirstName + ' ' + allCharactersObject[i].LastName) {
+                uniqueIndices.push(i)
+            }
+        }
+
+        //Get Unclicked characters
         while (uniqueIndices.length < 3) {
-            const index = Math.floor(Math.random() * 3);
+            const index = Math.floor(Math.random() * allCharacters.length);
             if (!uniqueIndices.includes(index)) {
                 uniqueIndices.push(index)
             }
@@ -61,8 +86,9 @@ export default function Playing({ difficulty, setIsGameover, isGameover }) {
                     setAllCharactersObject(prevState => [
                         ...prevState,
                         {
-                            name: character.FirstName + ' ' + character.LastName,
-                            image: blob,
+                            FirstName: character.FirstName, 
+                            LastName: character.LastName,
+                            Image: blob,
                         }
                     ])
                 })  
@@ -75,14 +101,14 @@ export default function Playing({ difficulty, setIsGameover, isGameover }) {
     }
 
     function checkGameOver(characterName) {
-        for (let charater1 of clickedCharacters) {
-            if (characterName === charater1) {
-                setIsGameover(true)
+        for (let character1 of clickedCharacters) {
+            if (characterName === character1.FirstName + ' ' + character1.LastName) {
+                setIsGameOver(true)
                 return 
             }
         }
         if (score === limit) {
-            setIsGameover(true)
+            setIsGameOver(true)
             return
         }
         setScore(score + 1)
@@ -93,9 +119,9 @@ export default function Playing({ difficulty, setIsGameover, isGameover }) {
             <div className='cards-container'>  
                 {shownCharacters.map((character) => (
                     <Card 
-                        key={character.name}
-                        characterName={character.name}
-                        characterImage={character.image}
+                        key={character.FirstName}
+                        characterName={character.FirstName + ' ' + character.LastName}
+                        characterImage={character.Image}
                         handleCardClick={handleCardClick}
                     />
                 ))}
