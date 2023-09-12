@@ -91,28 +91,56 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
     }
 
     function decideShownCharacters() {
+        let cardsShown;
+        if (difficulty === 'easy') {
+            cardsShown = 3
+        } else if (difficulty === 'medium') {
+            cardsShown = 4
+        } else if (difficulty === 'hard') {
+            cardsShown = 5
+        }
+        let numberClickedShown = 1
+        if (score > 3) {
+            numberClickedShown = 2
+        } 
+        if (score > 5) {
+            numberClickedShown = 3
+        } 
+        if (score > 7) {
+            numberClickedShown = 4
+        }
 
         if (clickedCharacters.length === 0) {
             // Handle the case where there are no clicked characters
-            const randomCharacters = _.sampleSize(allCharactersObject, 3)
+            const randomCharacters = _.sampleSize(allCharactersObject, cardsShown)
             setShownCharacters(randomCharacters)
             return;
         }
 
-        const clickedIndex = _.random(0, clickedCharacters.length - 1);
-        const clickedName = clickedCharacters[clickedIndex];
-        const clickedCharacter = _.find(allCharactersObject, (character) =>
-          `${character.FirstName} ${character.LastName}` === clickedName
-        )
+        const clickedCharactersArray = [];
+
+        while (clickedCharactersArray.length < numberClickedShown) {
+            const clickedIndex = _.random(0, clickedCharacters.length - 1);
+            const clickedName = clickedCharacters[clickedIndex];
+            const clickedCharacter = _.find(allCharactersObject, (character) =>
+            `${character.FirstName} ${character.LastName}` === clickedName &&
+            !clickedCharactersArray.includes(character)
+            );
+            if (clickedCharacter !== undefined) {
+                clickedCharactersArray.push(clickedCharacter);
+            }
+        }
+        console.log(numberClickedShown)
       
         const unclickedCharacters = _.filter(allCharactersObject, (character) =>
-          `${character.FirstName} ${character.LastName}` !== clickedName &&
           !clickedCharacters.includes(`${character.FirstName} ${character.LastName}`)
         )
-  
-        const randomUnclickedCharacters = _.sampleSize(unclickedCharacters, 2)
 
-        let selectedCharacters = _.shuffle([clickedCharacter, ...randomUnclickedCharacters])
+  
+        const randomUnclickedCharacters = _.sampleSize(unclickedCharacters, cardsShown - numberClickedShown)
+
+        let selectedCharacters = _.shuffle([...clickedCharactersArray, ...randomUnclickedCharacters])
+        console.log(clickedCharacters)
 
         setShownCharacters(selectedCharacters);
     }

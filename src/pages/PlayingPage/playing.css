@@ -11,21 +11,23 @@
     font-size: 2rem;
 }
 
-@media (max-width: 600px) {
-    .playing-main {
-        height: calc(100vh - 5rem - 280px);
-    }
+.cards-container {
+    height: min-content;
+    display: flex;
+    align-items: center;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
     .playing-main {
         height: calc(100vh - 5rem - 300px);
     }
 }
 
-
-.cards-container {
-    height: min-content;
-    display: flex;
-    align-items: center;
+@media (max-width: 500px) {
+    .playing-main {
+        height: calc(100vh - 5rem - 300px);
+    }
+    .cards-container {
+        /* flex-wrap: wrap; */
+    }
 }
