@@ -131,7 +131,9 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
         if (score + 1 === limit) {
             setIsGameOver(true)
             setResult('You Won')
-            return
+        }
+        if (score + 1 > bestScore) {
+            setBestScore(score + 1)
         }
     }
 
