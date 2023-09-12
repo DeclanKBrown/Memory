@@ -2,6 +2,7 @@ import './playing.css'
 import Card from '../../components/Card'
 import Results from '../../components/Results'
 import { useState, useEffect } from 'react'
+import _ from 'lodash'
 
 export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart, score, setScore, bestScore, setBestScore, clickedCharacters, setClickedCharacters }) {
 
@@ -89,27 +90,31 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
         })
     }
 
-    function decideShownCharacters() { //MAKE BETTER
-        //Get IDS
-        const uniqueIndices = [];
-        //Add one that has already been clicked to be displayed
-        const clickedIndex = Math.floor(Math.random() * clickedCharacters.length)
-        for (let i = 0; i <  allCharactersObject.length; ++i) {
-            if (clickedCharacters[clickedIndex] === allCharactersObject[i].FirstName + ' ' + allCharactersObject[i].LastName) {
-                uniqueIndices.push(i)
-            }
+    function decideShownCharacters() {
+
+        if (clickedCharacters.length === 0) {
+            // Handle the case where there are no clicked characters
+            const randomCharacters = _.sampleSize(allCharactersObject, 3)
+            setShownCharacters(randomCharacters)
+            return;
         }
 
-        //Get Unclicked characters
-        while (uniqueIndices.length < 3) {
-            const index = Math.floor(Math.random() * allCharacters.length);
-            if (!uniqueIndices.includes(index)) {
-                uniqueIndices.push(index)
-            }
-        }
-        //Get Selected Characters
-        const selectedCharacters = uniqueIndices.map(index => allCharactersObject[index])
-        setShownCharacters(selectedCharacters) //Set the selcted characters to be rendered
+        const clickedIndex = _.random(0, clickedCharacters.length - 1);
+        const clickedName = clickedCharacters[clickedIndex];
+        const clickedCharacter = _.find(allCharactersObject, (character) =>
+          `${character.FirstName} ${character.LastName}` === clickedName
+        )
+      
+        const unclickedCharacters = _.filter(allCharactersObject, (character) =>
+          `${character.FirstName} ${character.LastName}` !== clickedName &&
+          !clickedCharacters.includes(`${character.FirstName} ${character.LastName}`)
+        )
+  
+        const randomUnclickedCharacters = _.sampleSize(unclickedCharacters, 2)
+
+        let selectedCharacters = _.shuffle([clickedCharacter, ...randomUnclickedCharacters])
+
+        setShownCharacters(selectedCharacters);
     }
     
     function handleCardClick(characterName) {

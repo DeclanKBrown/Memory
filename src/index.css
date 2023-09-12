@@ -23,4 +23,5 @@ body {
 #root {
     height: 100vh;
     background-image: url('./assets/background.jpeg');
+    background-position: center center;
 }
