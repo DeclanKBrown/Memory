@@ -10,12 +10,23 @@ export default function App() {
   const [difficulty, setDifficulty] = useState('')
   const [isGameOver, setIsGameOver] = useState(false)
   const [result, setResult] = useState('')
+  const [bestScore, setBestScore] = useState(0) //Implement 
+  const [score, setScore] = useState(0)
+  const [clickedCharacters, setClickedCharacters] = useState([])
 
-  function restart() {
+  function reset() {
     setIsPlaying(false)
     setDifficulty('')
     setIsGameOver(false)
     setResult('')
+    setScore(0)
+  }
+  
+  function restart() {
+    setIsGameOver(false)
+    setResult('')
+    setScore(0)
+    setClickedCharacters([])
   }
 
   return (
@@ -23,7 +34,9 @@ export default function App() {
     {isPlaying ? (
       <>
         <Header
-          setIsPlaying={setIsPlaying}
+          reset={reset}
+          score={score}
+          bestScore={bestScore}
         />
         <Playing 
           difficulty={difficulty}
@@ -32,6 +45,12 @@ export default function App() {
           result={result}
           setResult={setResult}
           restart={restart}
+          score={score}
+          setScore={setScore}
+          bestScore={bestScore}
+          setBestScore={setBestScore}
+          clickedCharacters={clickedCharacters}
+          setClickedCharacters={setClickedCharacters}
         />
         <Footer />
       </>

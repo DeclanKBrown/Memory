@@ -3,12 +3,10 @@ import Card from '../../components/Card'
 import Results from '../../components/Results'
 import { useState, useEffect } from 'react'
 
-export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart }) {
+export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart, score, setScore, bestScore, setBestScore, clickedCharacters, setClickedCharacters }) {
 
     const [allCharactersObject, setAllCharactersObject] = useState([]);
-    const [clickedCharacters, setClickedCharacters] = useState([])
     const [shownCharacters, setShownCharacters] = useState([])
-    const [score, setScore] = useState(0)
     const allCharacters = [
         {
             FirstName: 'Homer',
@@ -73,7 +71,25 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
         allCharactersObject.length === allCharacters.length && decideShownCharacters()
     }, [clickedCharacters, allCharactersObject])
 
-    function decideShownCharacters() {
+
+    function getCharacters() {
+        allCharacters.map((character) => {
+            fetch(`https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2F${character.FirstName + character.LastName}.png`)
+                .then(response => response.blob())
+                .then(blob => {
+                    setAllCharactersObject(prevState => [
+                        ...prevState,
+                        {
+                            FirstName: character.FirstName, 
+                            LastName: character.LastName,
+                            Image: blob,
+                        }
+                    ])
+                })  
+        })
+    }
+
+    function decideShownCharacters() { //MAKE BETTER
         //Get IDS
         const uniqueIndices = [];
         //Add one that has already been clicked to be displayed
@@ -95,30 +111,11 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
         const selectedCharacters = uniqueIndices.map(index => allCharactersObject[index])
         setShownCharacters(selectedCharacters) //Set the selcted characters to be rendered
     }
-
-    function getCharacters() {
-        allCharacters.map((character) => {
-            fetch(`https://cdn.glitch.com/3c3ffadc-3406-4440-bb95-d40ec8fcde72%2F${character.FirstName + character.LastName}.png`)
-                .then(response => response.blob())
-                .then(blob => {
-                    setAllCharactersObject(prevState => [
-                        ...prevState,
-                        {
-                            FirstName: character.FirstName, 
-                            LastName: character.LastName,
-                            Image: blob,
-                        }
-                    ])
-                })  
-        })
-    }
     
     function handleCardClick(characterName) {
         if (!isGameOver) {
             checkGameOver(characterName)
-            if (!isGameOver) {
-                setClickedCharacters([...clickedCharacters, characterName])
-            }
+            setClickedCharacters([...clickedCharacters, characterName])
         }
     }
 
