@@ -130,17 +130,14 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
                 clickedCharactersArray.push(clickedCharacter);
             }
         }
-        console.log(numberClickedShown)
-      
+              
         const unclickedCharacters = _.filter(allCharactersObject, (character) =>
           !clickedCharacters.includes(`${character.FirstName} ${character.LastName}`)
         )
 
-  
         const randomUnclickedCharacters = _.sampleSize(unclickedCharacters, cardsShown - numberClickedShown)
 
         let selectedCharacters = _.shuffle([...clickedCharactersArray, ...randomUnclickedCharacters])
-        console.log(clickedCharacters)
 
         setShownCharacters(selectedCharacters);
     }

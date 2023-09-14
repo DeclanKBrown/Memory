@@ -1,7 +1,7 @@
 import './homepage.css'
 import logo from '../../assets/logo.png'
 
-export default function Homepage({ setIsPlaying, setDifficulty }) {
+export default function Homepage({ setIsPlaying, setDifficulty, playClick }) {
     return (
         <div className='main'>
             <img className='logo' src={logo} />
@@ -10,17 +10,20 @@ export default function Homepage({ setIsPlaying, setDifficulty }) {
                 <button className='select' 
                     onClick={() => {
                         setIsPlaying(true)
-                        setDifficulty('easy')}
+                        setDifficulty('easy')
+                        playClick()}
                     }>Easy</button>
                 <button className='select'
                     onClick={() => {
                         setIsPlaying(true)
-                        setDifficulty('medium')}
+                        setDifficulty('medium')
+                        playClick()}
                     }>Medium</button>
                 <button className='select'
                     onClick={() => {
                         setIsPlaying(true)
-                        setDifficulty('hard')}
+                        setDifficulty('hard')
+                        playClick()}
                     }>Hard</button>
             </div>
         </div>

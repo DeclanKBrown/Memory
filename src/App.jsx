@@ -2,6 +2,8 @@ import Homepage from './pages/HomePage/Homepage.jsx'
 import Footer from './components/Footer.jsx'
 import Header from './components/Header.jsx'
 import Playing from './pages/PlayingPage/Playing.jsx'
+import clickSound from './assets/click.wav'
+import bgMusic from './assets/music.mp3'
 import { useState } from 'react'
 
 export default function App() {
@@ -13,6 +15,8 @@ export default function App() {
   const [bestScore, setBestScore] = useState(0) //Implement 
   const [score, setScore] = useState(0)
   const [clickedCharacters, setClickedCharacters] = useState([])
+  const [musicIsOn, setMusicIsOn] = useState(false)
+  const [soundIsOn, setSoundIsOn] = useState(true)
 
   function reset() {
     setIsPlaying(false)
@@ -20,6 +24,7 @@ export default function App() {
     setIsGameOver(false)
     setResult('')
     setScore(0)
+    setClickedCharacters([])
   }
   
   function restart() {
@@ -28,6 +33,14 @@ export default function App() {
     setScore(0)
     setClickedCharacters([])
   }
+
+  const playClick = () => {
+    if(soundIsOn) {
+      const audio = new Audio(clickSound);
+      audio.volume = 0.07;
+      audio.play();
+    }
+  };
 
   return (
     <>
@@ -52,15 +65,26 @@ export default function App() {
           clickedCharacters={clickedCharacters}
           setClickedCharacters={setClickedCharacters}
         />
-        <Footer />
+        <Footer
+          musicIsOn={musicIsOn}
+          setMusicIsOn={setMusicIsOn}
+          soundIsOn={soundIsOn}
+          setSoundIsOn={setSoundIsOn}
+        />
       </>
     ) : (
       <>
         <Homepage 
           setIsPlaying={setIsPlaying}
           setDifficulty={setDifficulty}
+          playClick={playClick}
         />
-        <Footer />
+        <Footer 
+          musicIsOn={musicIsOn}
+          setMusicIsOn={setMusicIsOn}
+          soundIsOn={soundIsOn}
+          setSoundIsOn={setSoundIsOn}
+        />
       </>
     )
     }
