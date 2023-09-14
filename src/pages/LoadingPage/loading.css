@@ -1,0 +1,10 @@
+.loading-container {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    grid-template-rows: auto;
+}
+
+.loading-container span {
+    font-size: 5rem;
+}

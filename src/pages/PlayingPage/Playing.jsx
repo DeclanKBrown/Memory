@@ -1,11 +1,13 @@
 import './playing.css'
 import Card from '../../components/Card'
 import Results from '../../components/Results'
+import Loading from '../LoadingPage/Loading'
 import { useState, useEffect } from 'react'
 import _ from 'lodash'
 
 export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart, score, setScore, bestScore, setBestScore, clickedCharacters, setClickedCharacters, playClick }) {
 
+    const [fetched, setFetched] = useState(false)
     const [allCharactersObject, setAllCharactersObject] = useState([]);
     const [shownCharacters, setShownCharacters] = useState([])
     const allCharacters = [
@@ -69,7 +71,7 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
     }, []);
 
     useEffect(() => {
-        allCharactersObject.length === allCharacters.length && decideShownCharacters()
+        allCharactersObject.length === allCharacters.length && decideShownCharacters() 
     }, [clickedCharacters, allCharactersObject])
 
 
@@ -86,7 +88,7 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
                             Image: blob,
                         }
                     ])
-                })  
+                }) .then (() => setFetched(true)) 
         })
     }
 
@@ -175,20 +177,26 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
                     result={result}
                     restart={restart}
                 />
-                )}
-            <div className='cards-container'>  
-                {shownCharacters.map((character) => (
-                    <Card 
-                        key={character.FirstName}
-                        characterName={character.FirstName + ' ' + character.LastName}
-                        characterImage={character.Image}
-                        handleCardClick={handleCardClick}
-                    />
-                ))}
-            </div>
-            <div className='score'>
-                <span className='playing-score'>{score} / {limit}</span>
-            </div>
+            )}
+            {fetched ? (
+                <>
+                    <div className='cards-container'>  
+                        {shownCharacters.map((character) => (
+                            <Card 
+                                key={character.FirstName}
+                                characterName={character.FirstName + ' ' + character.LastName}
+                                characterImage={character.Image}
+                                handleCardClick={handleCardClick}
+                            />
+                        ))}
+                    </div>
+                <div className='score'>
+                    <span className='playing-score'>{score} / {limit}</span>
+                </div>
+                </>
+            ) : (
+                <Loading />
+            )}
         </main>
     )
 }
