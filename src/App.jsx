@@ -3,7 +3,6 @@ import Footer from './components/Footer.jsx'
 import Header from './components/Header.jsx'
 import Playing from './pages/PlayingPage/Playing.jsx'
 import clickSound from './assets/click.wav'
-import bgMusic from './assets/music.mp3'
 import { useState } from 'react'
 
 export default function App() {
@@ -15,7 +14,6 @@ export default function App() {
   const [bestScore, setBestScore] = useState(0) //Implement 
   const [score, setScore] = useState(0)
   const [clickedCharacters, setClickedCharacters] = useState([])
-  const [musicIsOn, setMusicIsOn] = useState(false)
   const [soundIsOn, setSoundIsOn] = useState(true)
 
   function reset() {
@@ -64,10 +62,9 @@ export default function App() {
           setBestScore={setBestScore}
           clickedCharacters={clickedCharacters}
           setClickedCharacters={setClickedCharacters}
+          playClick={playClick}
         />
         <Footer
-          musicIsOn={musicIsOn}
-          setMusicIsOn={setMusicIsOn}
           soundIsOn={soundIsOn}
           setSoundIsOn={setSoundIsOn}
         />
@@ -80,8 +77,6 @@ export default function App() {
           playClick={playClick}
         />
         <Footer 
-          musicIsOn={musicIsOn}
-          setMusicIsOn={setMusicIsOn}
           soundIsOn={soundIsOn}
           setSoundIsOn={setSoundIsOn}
         />

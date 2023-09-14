@@ -33,3 +33,14 @@
 .footer-button svg {
     width: 1.8rem;
 }
+
+.help {
+    position: fixed;
+    top: 70%;
+    left: 63%;
+    transform: translateX(120%);
+    width: 15%;
+    border: 1px solid black;
+    z-index: 2;
+    border-radius: 1rem;
+}

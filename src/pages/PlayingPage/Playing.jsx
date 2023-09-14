@@ -4,7 +4,7 @@ import Results from '../../components/Results'
 import { useState, useEffect } from 'react'
 import _ from 'lodash'
 
-export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart, score, setScore, bestScore, setBestScore, clickedCharacters, setClickedCharacters }) {
+export default function Playing({ difficulty, setIsGameOver, isGameOver, result, setResult, restart, score, setScore, bestScore, setBestScore, clickedCharacters, setClickedCharacters, playClick }) {
 
     const [allCharactersObject, setAllCharactersObject] = useState([]);
     const [shownCharacters, setShownCharacters] = useState([])
@@ -130,7 +130,7 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
                 clickedCharactersArray.push(clickedCharacter);
             }
         }
-              
+
         const unclickedCharacters = _.filter(allCharactersObject, (character) =>
           !clickedCharacters.includes(`${character.FirstName} ${character.LastName}`)
         )
@@ -143,6 +143,7 @@ export default function Playing({ difficulty, setIsGameOver, isGameOver, result,
     }
     
     function handleCardClick(characterName) {
+        playClick()
         if (!isGameOver) {
             checkGameOver(characterName)
             setClickedCharacters([...clickedCharacters, characterName])
